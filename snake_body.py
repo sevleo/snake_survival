@@ -15,16 +15,19 @@ class Snake_body:
         self.rect = pygame.Rect(0, 0, self.settings.bodysize, self.settings.bodysize) 
         self.y = float(self.rect.y)
         self.x = float(self.rect.x)
+        self.previous_position = ''
 
         self.update_position(preceding_part)
-        #print(preceding_part.body)
 
 
     def update_position(self, preceding_part):
         self.x = preceding_part.x
         self.y = preceding_part.y
-        self.rect.y = preceding_part.y
-        self.rect.x = preceding_part.x
+
+        self.previous_position = self.rect.copy()
+
+        self.rect.y = self.y
+        self.rect.x = self.x
 
 
     def draw_body_part(self):

@@ -2,7 +2,6 @@ import sys
 import pygame
 from settings import Settings
 from snake_head import Snake_head
-import itertools
 
 class SnakeSurvival:
     """Overall class to manage game assets and behavior."""
@@ -28,7 +27,7 @@ class SnakeSurvival:
             self._check_events()
             self.snake.update()
             self._update_screen()
-            self.clock.tick(10)
+            self.clock.tick(60)
 
 
     def _check_events(self):
@@ -86,26 +85,18 @@ class SnakeSurvival:
         """Update images on the screen, and flip to the new screen."""
         self.screen.fill(self.settings.bg_color)
         self.snake.draw_snake()
-        for body_part in self.snake.body:
-            #body_part.update_position(self.snake)
-            body_part.draw_body_part()
-        
+
+
+        for index, body_part in enumerate(self.snake.body):
+            if index == 0:
+                body_part.update_position(self.snake.previous_position)
+                body_part.draw_body_part()
+            else:
+                previous_body_part = self.snake.body[index-1]
+                body_part.update_position(previous_body_part.previous_position)
+                body_part.draw_body_part()
+       
         pygame.display.flip()
-
-        """if len(self.snake.body) > 1:
-            for body_part in reversed(self.snake.body):
-                current_index = self.snake.body.index(body_part)
-                previous_index = current_index - 1
-
-                body_part.update_position(self.snake.body[previous_index])"""
-
-
-        for body_part in self.snake.body:
-            body_part.update_position(self.snake)
-
-
-
-
     
 
     

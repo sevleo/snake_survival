@@ -19,6 +19,7 @@ class Snake_head:
         self.rect.center = self.screen_rect.center
         self.y = float(self.rect.y)
         self.x = float(self.rect.x)
+        self.previous_position = ''
 
         self.body = []
 
@@ -51,7 +52,8 @@ class Snake_head:
                 self.x -= self.settings.snake_speed
             else:
                 self.x -= self.settings.snake_speed
-
+        
+        self.previous_position = self.rect.copy()
         self.rect.y = self.y
         self.rect.x = self.x
 
