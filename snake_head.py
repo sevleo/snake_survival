@@ -25,37 +25,31 @@ class Snake_head:
 
     # Update the position of the head
     def update(self):
-        if self.moving_up == True:
+        if self.moving_up:
+            self.y -= self.settings.snake_speed
             if self.rect.bottom < self.screen_rect.top:
                 self.y = self.screen_rect.bottom
-                self.y -= self.settings.snake_speed
-            else: 
-                self.y -= self.settings.snake_speed
 
-        elif self.moving_down == True:
+        elif self.moving_down:
+            self.y += self.settings.snake_speed
             if self.rect.top > self.screen_rect.bottom:
                 self.y = self.screen_rect.top - self.settings.headsize
-                self.y += self.settings.snake_speed
-            else:
-                self.y += self.settings.snake_speed
 
-        elif self.moving_right == True:
+
+        elif self.moving_right:
+            self.x += self.settings.snake_speed
             if self.rect.left > self.screen_rect.right:
                 self.x = self.screen_rect.left - self.settings.headsize
-                self.x += self.settings.snake_speed
-            else:
-                self.x += self.settings.snake_speed
 
-        elif self.moving_left == True:
+        elif self.moving_left:
+            self.x -= self.settings.snake_speed
             if self.rect.right < self.screen_rect.left:
                 self.x = self.screen_rect.right
-                self.x -= self.settings.snake_speed
-            else:
-                self.x -= self.settings.snake_speed
-        
+                
         self.previous_position = self.rect.copy()
         self.rect.y = self.y
         self.rect.x = self.x
+
 
     # Add a body part
     def grow_body(self, ss_game):
