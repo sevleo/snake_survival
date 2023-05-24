@@ -62,6 +62,14 @@ class Snake_head:
 
         self.body.append(new_body_part)
 
+    def update_body(self):
+        for index, body_part in enumerate(self.body):
+            if index == 0:
+                body_part.update_position(self.previous_position)
+            else:
+                previous_body_part = self.body[index-1]
+                body_part.update_position(previous_body_part.previous_position)
+
     
     def draw_snake(self):
         """Draw the snake to the screen."""
