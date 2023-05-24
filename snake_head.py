@@ -67,8 +67,7 @@ class Snake_head:
             if index == 0:
                 body_part.update_position(self.previous_position)
             else:
-                previous_body_part = self.body[index-1]
-                body_part.update_position(previous_body_part.previous_position)
+                body_part.update_position(self.body[index-1].previous_position)
 
     
     def draw_snake(self):
