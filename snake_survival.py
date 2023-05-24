@@ -91,12 +91,8 @@ class SnakeSurvival:
         for body_part in self.snake.body:
             body_part.draw_body_part()
 
-
-       
         pygame.display.flip()
     
-
-
     
 if __name__ == '__main__':
     # Make a game instance, and ru nthe game.

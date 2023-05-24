@@ -10,7 +10,7 @@ class Settings:
 
         # Snake settings
         self.snake_color = (50, 50, 50)
-        self.snake_speed = 5
+        self.snake_speed = 3
         self.headsize = 15
         self.bodysize = 15
         self.snake_body_margin = 5

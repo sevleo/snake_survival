@@ -27,23 +27,23 @@ class Snake_head:
     def update(self):
         if self.moving_up:
             self.y -= self.settings.snake_speed
-            if self.rect.bottom < self.screen_rect.top:
+            if self.rect.bottom-self.settings.headsize < self.screen_rect.top:
                 self.y = self.screen_rect.bottom
 
         elif self.moving_down:
             self.y += self.settings.snake_speed
-            if self.rect.top > self.screen_rect.bottom:
+            if self.rect.top+self.settings.headsize > self.screen_rect.bottom:
                 self.y = self.screen_rect.top - self.settings.headsize
 
 
         elif self.moving_right:
             self.x += self.settings.snake_speed
-            if self.rect.left > self.screen_rect.right:
+            if self.rect.left+self.settings.headsize > self.screen_rect.right:
                 self.x = self.screen_rect.left - self.settings.headsize
 
         elif self.moving_left:
             self.x -= self.settings.snake_speed
-            if self.rect.right < self.screen_rect.left:
+            if self.rect.right-self.settings.headsize < self.screen_rect.left:
                 self.x = self.screen_rect.right
                 
         self.previous_position = self.rect.copy()
