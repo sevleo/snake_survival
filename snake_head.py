@@ -23,7 +23,7 @@ class Snake_head:
 
         self.body = []
 
-
+    # Update the position of the head
     def update(self):
         if self.moving_up == True:
             if self.rect.bottom < self.screen_rect.top:
@@ -57,15 +57,14 @@ class Snake_head:
         self.rect.y = self.y
         self.rect.x = self.x
 
-    
+    # Add a body part
     def grow_body(self, ss_game):
+        # Create the first body part
         if not self.body:
             new_body_part = Snake_body(ss_game, self)
-            print(f"getting head {self}")
+        # Create subsequent body parts
         else: 
-            new_body_part = Snake_body(ss_game, self.body[-1])
-            print(f"getting preceding body part {self.body[-1]}")
-
+           new_body_part = Snake_body(ss_game, self.body[-1])
 
         self.body.append(new_body_part)
 

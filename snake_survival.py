@@ -66,6 +66,8 @@ class SnakeSurvival:
             self.snake.moving_right = False
             self.snake.moving_left = True
             self.snake.moving_up = False
+
+        # Temporary buttons to simplify testing
         elif event.key == pygame.K_SPACE:
             self.snake.grow_body(self)
         elif event.key == pygame.K_i:

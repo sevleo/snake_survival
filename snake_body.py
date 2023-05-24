@@ -19,7 +19,7 @@ class Snake_body:
 
         self.update_position(preceding_part)
 
-
+    # Update the position of a bady part
     def update_position(self, preceding_part):
         self.x = preceding_part.x
         self.y = preceding_part.y
