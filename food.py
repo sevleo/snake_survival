@@ -21,5 +21,6 @@ class Food:
         self.rect.x = random.randint(15, self.settings.screen_width-15)
         self.rect.y = random.randint(15, self.settings.screen_height-15)
 
+
     def draw_food(self):
         pygame.draw.rect(self.screen, self.color, self.rect)

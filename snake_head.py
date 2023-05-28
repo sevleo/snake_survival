@@ -25,6 +25,7 @@ class Snake_head:
 
         self.body = []
 
+
     # Update the position of the head
     def update_head(self):
         if self.moving_up:
@@ -62,6 +63,7 @@ class Snake_head:
            new_body_part = Snake_body(ss_game, self.body[-1])
 
         self.body.append(new_body_part)
+
 
     # Update position of each body part
     def update_body(self):

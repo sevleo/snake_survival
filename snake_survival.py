@@ -33,7 +33,8 @@ class SnakeSurvival:
             self.snake.update_body()
             self._check_food_collision()
             self._update_screen()
-            self.clock.tick(60)
+            self.clock.tick(self.settings.tick_value)
+            
 
 
     def _check_events(self):

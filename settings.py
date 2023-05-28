@@ -7,6 +7,7 @@ class Settings:
         self.screen_width = 1200
         self.screen_height = 800
         self.bg_color = (230, 230, 230)
+        self.tick_value = 15
 
         # Snake settings
         self.snake_color = (50, 50, 50)
@@ -23,6 +24,8 @@ class Settings:
         self.food_color = (50, 255, 50)
 
         self.initialize_dynamic_settings()
+
+        # Game settings
 
 
     def initialize_dynamic_settings(self):
