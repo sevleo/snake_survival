@@ -3,6 +3,7 @@ import pygame
 from settings import Settings
 from snake_head import Snake_head
 from food import Food
+from scoreboard import Scoreboard
 
 class SnakeSurvival:
     """Overall class to manage game assets and behavior."""
@@ -19,10 +20,10 @@ class SnakeSurvival:
         pygame.display.set_caption("Snake Survival")
         self.screen_rect = self.screen.get_rect()
         
+        self.sb = Scoreboard(self)
         self.snake = Snake_head(self)
         self.food = Food(self)
         
-
 
     def run_game(self):
         """Start the main loop for the game."""
@@ -74,7 +75,7 @@ class SnakeSurvival:
 
         # Temporary buttons to simplify testing
         elif event.key == pygame.K_SPACE:
-            self.snake.grow_body(self)
+            self.snake.speed_factor = 1.5
         elif event.key == pygame.K_i:
             print(f"{self.snake.body}")
 
@@ -86,6 +87,8 @@ class SnakeSurvival:
         if event.key == pygame.K_UP:
             #self.ship.moving_up = False
             pass
+        elif event.key == pygame.K_SPACE:
+            self.snake.speed_factor = 1
 
 
     def _update_screen(self):

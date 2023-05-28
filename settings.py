@@ -28,3 +28,5 @@ class Settings:
     def initialize_dynamic_settings(self):
         """Initialize settings that change throughout the game."""
         self.snake_speed = 4
+
+    

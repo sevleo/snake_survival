@@ -15,6 +15,8 @@ class Snake_head:
         self.moving_right = False
         self.moving_left = False
 
+        self.speed_factor = 1 #Default value, changes when pressing Space
+
         self.rect = pygame.Rect(0, 0, self.settings.headsize, self.settings.headsize)
         self.rect.center = self.screen_rect.center
         self.y = float(self.rect.y)
@@ -26,22 +28,22 @@ class Snake_head:
     # Update the position of the head
     def update_head(self):
         if self.moving_up:
-            self.y -= self.settings.snake_speed
+            self.y -= self.settings.snake_speed * self.speed_factor
             if self.rect.top <= self.screen_rect.top:
                 self.y = self.screen_rect.bottom - self.settings.headsize
 
         elif self.moving_down:
-            self.y += self.settings.snake_speed
+            self.y += self.settings.snake_speed * self.speed_factor
             if self.rect.top+self.settings.headsize >= self.screen_rect.bottom:
                 self.y = self.screen_rect.top
 
         elif self.moving_right:
-            self.x += self.settings.snake_speed
+            self.x += self.settings.snake_speed * self.speed_factor
             if self.rect.left+self.settings.headsize >= self.screen_rect.right:
                 self.x = self.screen_rect.left
 
         elif self.moving_left:
-            self.x -= self.settings.snake_speed
+            self.x -= self.settings.snake_speed * self.speed_factor
             if self.rect.left <= self.screen_rect.left:
                 self.x = self.screen_rect.right - self.settings.headsize
                 
