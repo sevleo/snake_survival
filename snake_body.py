@@ -10,7 +10,7 @@ class Snake_body:
         self.screen_rect = ss_game.screen.get_rect()
         self.settings = ss_game.settings
         self.color = self.settings.snake_color
-        self.margin = self.settings.snake_body_margin
+        self.margin = self.settings.snake_body_margin # Can't remember what is this, let's keep for now
         
         self.rect = pygame.Rect(0, 0, self.settings.bodysize, self.settings.bodysize) 
         self.y = float(self.rect.y)

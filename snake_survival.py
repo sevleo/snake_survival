@@ -28,7 +28,9 @@ class SnakeSurvival:
             self.snake.update()
             self.snake.update_body()
             self._update_screen()
-            self.clock.tick(60)
+            print(self.snake.rect)
+            print(f"rect.top is {self.snake.rect.top}")
+            self.clock.tick(5)
 
 
     def _check_events(self):

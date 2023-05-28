@@ -10,8 +10,11 @@ class Settings:
 
         # Snake settings
         self.snake_color = (50, 50, 50)
-        self.snake_speed = 3
+        self.snake_speed = 15
         self.headsize = 15
         self.bodysize = 15
         self.snake_body_margin = 5
         
+        # Food settings
+        self.foodsize = 15
+        self.food_color = (50, 50, 50)
