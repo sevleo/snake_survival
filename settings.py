@@ -10,11 +10,21 @@ class Settings:
 
         # Snake settings
         self.snake_color = (50, 50, 50)
-        self.snake_speed = 15
+        
         self.headsize = 15
         self.bodysize = 15
         self.snake_body_margin = 5
+        self.speedup_scale = 0.07
+
+        self.growth_size = 3
         
         # Food settings
-        self.foodsize = 15
-        self.food_color = (50, 50, 50)
+        self.foodsize = 20
+        self.food_color = (50, 255, 50)
+
+        self.initialize_dynamic_settings()
+
+
+    def initialize_dynamic_settings(self):
+        """Initialize settings that change throughout the game."""
+        self.snake_speed = 4

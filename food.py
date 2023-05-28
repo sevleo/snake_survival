@@ -6,13 +6,20 @@ class Food:
 
     def __init__(self, ss_game):
         """Initialize a food unit."""
+        self.game = ss_game
+        self.snake = ss_game.snake
+
         self.screen = ss_game.screen
         self.screen_rect = ss_game.screen.get_rect()
         self.settings = ss_game.settings
         self.color = self.settings.food_color
+        self.rect = pygame.Rect(0, 0, self.settings.foodsize, self.settings.foodsize)
+        self.generate_food()
+        
+        
+    def generate_food(self):
+        self.rect.x = random.randint(15, self.settings.screen_width-15)
+        self.rect.y = random.randint(15, self.settings.screen_height-15)
 
-        self.rect = pygame.Rect(0, 0, self.settings.headsize, self.settings.headsize)
-        self.rect.center = self.screen_rect.center
-        self.y = float(self.rect.y)
-        self.x = float(self.rect.x)
-        self.previous_position = ''
+    def draw_food(self):
+        pygame.draw.rect(self.screen, self.color, self.rect)

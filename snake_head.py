@@ -24,7 +24,7 @@ class Snake_head:
         self.body = []
 
     # Update the position of the head
-    def update(self):
+    def update_head(self):
         if self.moving_up:
             self.y -= self.settings.snake_speed
             if self.rect.top <= self.screen_rect.top:
@@ -33,13 +33,12 @@ class Snake_head:
         elif self.moving_down:
             self.y += self.settings.snake_speed
             if self.rect.top+self.settings.headsize >= self.screen_rect.bottom:
-                self.y = self.screen_rect.top #- self.settings.headsize
-
+                self.y = self.screen_rect.top
 
         elif self.moving_right:
             self.x += self.settings.snake_speed
             if self.rect.left+self.settings.headsize >= self.screen_rect.right:
-                self.x = self.screen_rect.left #- self.settings.headsize
+                self.x = self.screen_rect.left
 
         elif self.moving_left:
             self.x -= self.settings.snake_speed
@@ -62,6 +61,7 @@ class Snake_head:
 
         self.body.append(new_body_part)
 
+    # Update position of each body part
     def update_body(self):
         for index, body_part in enumerate(self.body):
             if index == 0:

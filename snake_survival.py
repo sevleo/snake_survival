@@ -2,6 +2,7 @@ import sys
 import pygame
 from settings import Settings
 from snake_head import Snake_head
+from food import Food
 
 class SnakeSurvival:
     """Overall class to manage game assets and behavior."""
@@ -17,20 +18,21 @@ class SnakeSurvival:
         self.screen = pygame.display.set_mode((self.settings.screen_width,self.settings.screen_height))
         pygame.display.set_caption("Snake Survival")
         self.screen_rect = self.screen.get_rect()
-
+        
         self.snake = Snake_head(self)
+        self.food = Food(self)
+        
 
 
     def run_game(self):
         """Start the main loop for the game."""
         while True:
             self._check_events()
-            self.snake.update()
+            self.snake.update_head()
             self.snake.update_body()
+            self._check_food_collision()
             self._update_screen()
-            print(self.snake.rect)
-            print(f"rect.top is {self.snake.rect.top}")
-            self.clock.tick(5)
+            self.clock.tick(60)
 
 
     def _check_events(self):
@@ -92,8 +94,20 @@ class SnakeSurvival:
         self.snake.draw_snake()
         for body_part in self.snake.body:
             body_part.draw_body_part()
+        self.food.draw_food()
 
         pygame.display.flip()
+
+
+    # Check for head/food collision.
+    def _check_food_collision(self):
+        if self.snake.rect.colliderect(self.food):
+            self.food.generate_food()
+            i = 0
+            while i < self.settings.growth_size:
+                self.snake.grow_body(self)
+                i+=1
+            self.settings.snake_speed = self.settings.snake_speed + self.settings.speedup_scale
     
     
 if __name__ == '__main__':
