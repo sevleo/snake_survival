@@ -15,7 +15,7 @@ class Settings:
         self.headsize = 15
         self.bodysize = 15
         self.snake_body_margin = 5
-        self.speedup_scale = 0.07
+        self.speedup_scale = 0.5
 
         self.growth_size = 3
         

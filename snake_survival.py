@@ -76,7 +76,8 @@ class SnakeSurvival:
 
         # Temporary buttons to simplify testing
         elif event.key == pygame.K_SPACE:
-            self.snake.speed_factor = 1.5
+            #self.snake.speed_factor = 1.5
+            self.settings.tick_value = int(self.settings.tick_value * 1.5)
         elif event.key == pygame.K_i:
             print(f"{self.snake.body}")
 
@@ -89,7 +90,8 @@ class SnakeSurvival:
             #self.ship.moving_up = False
             pass
         elif event.key == pygame.K_SPACE:
-            self.snake.speed_factor = 1
+            #self.snake.speed_factor = 1
+            self.settings.tick_value = 15
 
 
     def _update_screen(self):

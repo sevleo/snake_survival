@@ -1,0 +1,31 @@
+Add enemy snake
+    Enemy snake appears at a random location at the start of the game (when you begin the movement)
+        - Later make snake come from beyond the border of the playfield
+
+    Enemy snake executes the random walk
+
+    Enemy snake does not require food to grow, it grows automatically. If it encounters food, it will make the player's snake shorter.
+    If enemy snake touches the player's snake, it will die, but it will make the player's snake shorter by the length of the deceased enemy snake.
+    If the player's snake touches an enemy snake, half the size of the player's snake will be transferred to the enemy snake.
+
+
+Food
+    Different kinds of food
+    Moving food (random walk) which will give more points
+
+
+Add Menu
+    When the game opens, the menu shows:
+        Start Game
+        Settings
+            In Settings, there is following option
+            Number of enemy snakes (0 to 5, 0 - default)
+
+
+
+Point system
+    - tbd
+
+
+Styling
+    - Style player's snake so that each 5th body part is of a different color (e.g. black snake with golden lines)
