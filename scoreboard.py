@@ -1,5 +1,5 @@
 import pygame.font
-from snake_head import Snake_head
+from snake_part import Snake_head
 
 
 class Scoreboard:

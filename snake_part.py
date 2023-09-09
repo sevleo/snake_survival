@@ -1,15 +1,28 @@
 import pygame
-from snake_body import Snake_body
+from time import sleep
 
-class Snake_head:
-    """A class to manage the snake."""
-
+class Snake_part:
+    """A base class for snake parts."""
     def __init__(self, ss_game):
-        """Initialize the snake and set its starting position."""
         self.screen = ss_game.screen
         self.screen_rect = ss_game.screen.get_rect()
         self.settings = ss_game.settings
         self.color = self.settings.snake_color
+
+        self.rect = pygame.Rect(0, 0, self.settings.bodysize, self.settings.bodysize)
+        self.rect.center = self.screen_rect.center
+        self.y = float(self.rect.y)
+        self.x = float(self.rect.x)
+        self.previous_position = ''
+
+    def draw_snake(self):
+        """Draw the snake to the screen."""
+        pygame.draw.rect(self.screen, self.color, self.rect)
+
+
+class Snake_head(Snake_part):
+    def __init__(self, ss_game):
+        super().__init__(ss_game)
         self.moving_up = False
         self.moving_down = False
         self.moving_right = False
@@ -17,16 +30,9 @@ class Snake_head:
 
         self.speed_factor = 1 #Default value, changes when pressing Space
 
-        self.rect = pygame.Rect(0, 0, self.settings.headsize, self.settings.headsize)
-        self.rect.center = self.screen_rect.center
-        self.y = float(self.rect.y)
-        self.x = float(self.rect.x)
-        self.previous_position = ''
 
         self.body = []
 
-
-    # Update the position of the head
     def update_head(self):
         if self.moving_up:
             self.y -= self.settings.snake_speed * self.speed_factor
@@ -52,7 +58,6 @@ class Snake_head:
         self.rect.y = self.y
         self.rect.x = self.x
 
-
     # Add a body part
     def grow_body(self, ss_game):
         # Create the first body part
@@ -73,7 +78,19 @@ class Snake_head:
             else:
                 body_part.update_position(self.body[index-1].previous_position)
 
-    
-    def draw_snake(self):
-        """Draw the snake to the screen."""
-        pygame.draw.rect(self.screen, self.color, self.rect)
+
+class Snake_body(Snake_part):
+    def __init__(self, ss_game, preceding_part):
+        super().__init__(ss_game)
+
+        self.update_position(preceding_part)
+
+    # Update the position of a bady part
+    def update_position(self, preceding_part):
+        self.x = preceding_part.x
+        self.y = preceding_part.y
+
+        self.previous_position = self.rect.copy()
+
+        self.rect.y = self.y
+        self.rect.x = self.x

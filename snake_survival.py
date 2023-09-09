@@ -1,7 +1,7 @@
 import sys
 import pygame
 from settings import Settings
-from snake_head import Snake_head
+from snake_part import Snake_head
 from food import Food
 from scoreboard import Scoreboard
 
@@ -99,7 +99,7 @@ class SnakeSurvival:
         self.screen.fill(self.settings.bg_color)
         self.snake.draw_snake()
         for body_part in self.snake.body:
-            body_part.draw_body_part()
+            body_part.draw_snake()
         self.food.draw_food()
         self.sb.show_score()
 

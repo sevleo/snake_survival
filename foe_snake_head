@@ -1,4 +1,0 @@
-import snake_head
-
-class Foe_snake_head:
-    "A class to manage the foe snakes."
