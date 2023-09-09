@@ -7,7 +7,9 @@ class Settings:
         self.screen_width = 1200
         self.screen_height = 800
         self.bg_color = (230, 230, 230)
-        self.tick_value = 240
+        self.tick_value = 200
+        self.tick_value_default = 200
+
 
         # Snake settings
         self.snake_color = (50, 50, 50)
@@ -17,7 +19,7 @@ class Settings:
         self.snake_body_margin = 5
         self.speedup_scale = 0.05
 
-        self.growth_size = 3
+        self.growth_size = 25
         
         # Food settings
         self.foodsize = 20
@@ -31,6 +33,6 @@ class Settings:
 
     def initialize_dynamic_settings(self):
         """Initialize settings that change throughout the game."""
-        self.snake_speed = 0.4
+        self.snake_speed = 0.5
 
     

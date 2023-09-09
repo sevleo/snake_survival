@@ -91,7 +91,7 @@ class SnakeSurvival:
             pass
         elif event.key == pygame.K_SPACE:
             #self.snake.speed_factor = 1
-            self.settings.tick_value = 240
+            self.settings.tick_value = self.settings.tick_value_default
 
 
     def _update_screen(self):
