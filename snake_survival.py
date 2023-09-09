@@ -101,6 +101,7 @@ class SnakeSurvival:
         for body_part in self.snake.body:
             body_part.draw_body_part()
         self.food.draw_food()
+        self.sb.show_score()
 
         pygame.display.flip()
 
@@ -114,6 +115,10 @@ class SnakeSurvival:
                 self.snake.grow_body(self)
                 i+=1
             self.settings.snake_speed = self.settings.snake_speed + self.settings.speedup_scale
+
+            # Update scoreboard
+            self.settings.snake_size += 1
+            self.sb.prep_images()
     
     
 if __name__ == '__main__':

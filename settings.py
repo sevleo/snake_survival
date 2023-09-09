@@ -17,8 +17,7 @@ class Settings:
         self.headsize = 15
         self.bodysize = 15
         self.snake_body_margin = 5
-        self.speedup_scale = 0.05
-
+        self.speedup_scale = 0.1
         self.growth_size = 25
         
         # Food settings
@@ -31,8 +30,13 @@ class Settings:
         self.space_speed_scale = 1.2
 
 
+
+
     def initialize_dynamic_settings(self):
         """Initialize settings that change throughout the game."""
-        self.snake_speed = 0.5
+        self.snake_speed = 1
+
+        # Scoreboard
+        self.snake_size = 1
 
     
