@@ -22,6 +22,7 @@ class SnakeSurvival:
         
         self.sb = Scoreboard(self)
         self.snake = Snake_head(self)
+        self.snake.grow_body(self)
         self.food = Food(self)
         
 
@@ -110,10 +111,7 @@ class SnakeSurvival:
     def _check_food_collision(self):
         if self.snake.rect.colliderect(self.food):
             self.food.generate_food()
-            i = 0
-            while i < self.settings.growth_size:
-                self.snake.grow_body(self)
-                i+=1
+            self.snake.grow_body(self)
             self.settings.snake_speed = self.settings.snake_speed + self.settings.speedup_scale
 
             # Update scoreboard

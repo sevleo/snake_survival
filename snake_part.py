@@ -60,14 +60,17 @@ class Snake_head(Snake_part):
 
     # Add a body part
     def grow_body(self, ss_game):
-        # Create the first body part
-        if not self.body:
-            new_body_part = Snake_body(ss_game, self)
-        # Create subsequent body parts
-        else: 
-           new_body_part = Snake_body(ss_game, self.body[-1])
+        i = 0
+        while i < self.settings.growth_size:
+            # Create the first body part
+            if not self.body:
+                new_body_part = Snake_body(ss_game, self)
+            # Create subsequent body parts
+            else: 
+                new_body_part = Snake_body(ss_game, self.body[-1])
 
-        self.body.append(new_body_part)
+            self.body.append(new_body_part)
+            i+=1
 
 
     # Update position of each body part
