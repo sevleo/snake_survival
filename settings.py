@@ -20,8 +20,8 @@ class Settings:
         self.speedup_scale = 0.1
         self.growth_size = 25
 
-        self.eye_width = 3
-        self.eye_height = 3
+        self.eye_width = 5
+        self.eye_height = 5
         
         # Food settings
         self.foodsize = 20

@@ -34,13 +34,31 @@ class Snake_head(Snake_part):
         self.left_eye_rect = pygame.Rect(0, 0, self.settings.eye_width, self.settings.eye_height)
         self.right_eye_rect = pygame.Rect(0, 0, self.settings.eye_width, self.settings.eye_height)
 
-        self.left_eye_rect.centerx = self.rect.centerx - 5
-        self.left_eye_rect.centery = self.rect.centery
-        self.right_eye_rect.centerx = self.rect.centerx + 5
-        self.right_eye_rect.centery = self.rect.centery
-
+        self.update_eyes()
         self.body = []
     
+    def update_eyes(self, direction="up"):
+        if direction == "up":
+            self.left_eye_rect.centerx = self.rect.centerx - 5
+            self.left_eye_rect.centery = self.rect.centery - 2
+            self.right_eye_rect.centerx = self.rect.centerx + 5
+            self.right_eye_rect.centery = self.rect.centery - 2
+        if direction == "down":
+            self.left_eye_rect.centerx = self.rect.centerx - 5 
+            self.left_eye_rect.centery = self.rect.centery + 2 
+            self.right_eye_rect.centerx = self.rect.centerx + 5
+            self.right_eye_rect.centery = self.rect.centery + 2
+        if direction == "right":
+            self.left_eye_rect.centerx = self.rect.centerx + 2 
+            self.left_eye_rect.centery = self.rect.centery - 5 
+            self.right_eye_rect.centerx = self.rect.centerx + 2
+            self.right_eye_rect.centery = self.rect.centery + 5
+        if direction == "left":
+            self.left_eye_rect.centerx = self.rect.centerx - 2 
+            self.left_eye_rect.centery = self.rect.centery - 5 
+            self.right_eye_rect.centerx = self.rect.centerx - 2
+            self.right_eye_rect.centery = self.rect.centery + 5
+
     def draw_eyes(self):
         pygame.draw.rect(self.screen, (255,0,0), self.left_eye_rect)
         pygame.draw.rect(self.screen, (255,0,0), self.right_eye_rect)
@@ -50,25 +68,30 @@ class Snake_head(Snake_part):
             self.y -= self.settings.snake_speed * self.speed_factor
             if self.rect.top <= self.screen_rect.top:
                 self.y = self.screen_rect.bottom - self.settings.headsize
+            self.update_eyes("up")
 
         elif self.moving_down:
             self.y += self.settings.snake_speed * self.speed_factor
             if self.rect.top+self.settings.headsize >= self.screen_rect.bottom:
                 self.y = self.screen_rect.top
+            self.update_eyes("down")
 
         elif self.moving_right:
             self.x += self.settings.snake_speed * self.speed_factor
             if self.rect.left+self.settings.headsize >= self.screen_rect.right:
                 self.x = self.screen_rect.left
+            self.update_eyes("right")
 
         elif self.moving_left:
             self.x -= self.settings.snake_speed * self.speed_factor
             if self.rect.left <= self.screen_rect.left:
                 self.x = self.screen_rect.right - self.settings.headsize
+            self.update_eyes("left")
                 
         self.previous_position = self.rect.copy()
         self.rect.y = self.y
         self.rect.x = self.x
+        
 
     # Add a body part
     def grow_body(self, ss_game):
