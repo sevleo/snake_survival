@@ -4,6 +4,8 @@ from settings import Settings
 from snake_part import SnakeHead
 from food import Food
 from scoreboard import Scoreboard
+from button import Button
+from time import sleep
 
 class SnakeSurvival:
     """Overall class to manage game assets and behavior."""
@@ -12,7 +14,7 @@ class SnakeSurvival:
         """Initialize the game, and create game resources."""
         pygame.init()
 
-        self.game_active = True
+        self.game_active = False
 
         self.clock = pygame.time.Clock()
         self.settings = Settings()
@@ -22,25 +24,30 @@ class SnakeSurvival:
         
         self.sb = Scoreboard(self)
         self.snake = SnakeHead(self)
-        self.snake.grow_body(self)
         self.food = Food(self)
 
-        self.collided_body_parts = []
-
         self.leading_rect_direction = ""
+
+        self.play_button = Button(self, "Play")
         
 
     def run_game(self):
         """Start the main loop for the game."""
-        while self.game_active == True:
+        while True:
             self._check_events()
-            self.snake.update_head()
-            self.snake.update_body()
-            self._check_food_collision()
-            self._check_body_collision()
+            if self.game_active:
+                self.snake.update_head()
+                self.snake.update_body()
+                self._check_food_collision()
+                self._check_body_collision()
             self._update_screen()
             self.clock.tick(self.settings.tick_value)
 
+
+    def _start_game(self):
+        self.game_active = True
+        self.sb.prep_images()
+        self.sb.show_score()
 
     def _check_events(self):
         """Respond to keypresses and mouse events."""
@@ -53,6 +60,7 @@ class SnakeSurvival:
                 self._check_keyup_events(event)
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_pos = pygame.mouse.get_pos()
+                self._check_play_button(mouse_pos)
 
 
     def _check_keydown_events(self, event):
@@ -83,6 +91,9 @@ class SnakeSurvival:
             self.snake.moving_up = False
             self.leading_rect_direction = "left"
 
+        elif event.key == pygame.K_p:
+            self._start_game()
+
         # Temporary buttons to simplify testing
         elif event.key == pygame.K_SPACE:
             #self.snake.speed_factor = 1.5
@@ -102,6 +113,12 @@ class SnakeSurvival:
             #self.snake.speed_factor = 1
             self.settings.tick_value = self.settings.tick_value_default
 
+    def _check_play_button(self, mouse_pos):
+        """Start a new game when the player clicks Play."""
+        button_clicked = self.play_button.rect.collidepoint(mouse_pos)
+        if button_clicked:
+            self._start_game()
+
 
     def _update_screen(self):
         """Update images on the screen, and flip to the new screen."""
@@ -112,7 +129,10 @@ class SnakeSurvival:
             body_part.draw_snake()
         self.snake.draw_eyes()
         self.food.draw_food()
- 
+
+         # Draw the play button if the game is inactive.
+        if not self.game_active:
+            self.play_button.draw_button()
 
         pygame.display.flip()
 
@@ -133,18 +153,30 @@ class SnakeSurvival:
         for body_part in self.snake.body[25:]:
             if self.leading_rect_direction == "up":
                 if (body_part.rect.bottom > self.snake.rect.top > body_part.rect.top) and (body_part.rect.centerx == self.snake.rect.centerx):
-                    self.game_active = False
+                    self._reset_round()
             if self.leading_rect_direction == "down":
                 if (body_part.rect.top < self.snake.rect.bottom < body_part.rect.bottom) and (body_part.rect.centerx == self.snake.rect.centerx):
-                    self.game_active = False
+                    self._reset_round()
             if self.leading_rect_direction == "right":
                 if (body_part.rect.left < self.snake.rect.right < body_part.rect.right) and (body_part.rect.centery == self.snake.rect.centery):
-                    self.game_active = False
+                    self._reset_round()
             if self.leading_rect_direction == "left":
                 if (body_part.rect.right > self.snake.rect.right > body_part.rect.left) and (body_part.rect.centery == self.snake.rect.centery):
-                    self.game_active = False               
-   
-    
+                    self._reset_round()
+                    
+
+    def _reset_round(self):
+        self.game_active = False
+        sleep(0.5)
+        self.snake.reset_snake()
+        self.snake.moving_down = False
+        self.snake.moving_right = False
+        self.snake.moving_left = False
+        self.snake.moving_up = False
+        self.settings.snake_speed = 1
+        self.settings.snake_size = 1
+
+
 if __name__ == '__main__':
     # Make a game instance, and ru nthe game.
     snake_survival = SnakeSurvival()

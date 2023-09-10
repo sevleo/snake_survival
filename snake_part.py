@@ -36,6 +36,7 @@ class SnakeHead(SnakePart):
 
         self.update_eyes()
         self.body = []
+        self.grow_body(self)
     
     def update_eyes(self, direction="up"):
         if direction == "up":
@@ -115,6 +116,18 @@ class SnakeHead(SnakePart):
                 body_part.update_position(self.previous_position)
             else:
                 body_part.update_position(self.body[index-1].previous_position)
+
+
+    def reset_snake(self):
+        self.rect.center = self.screen_rect.center
+        self.y = float(self.rect.y)
+        self.x = float(self.rect.x)
+        self.draw_snake()
+        self.draw_eyes()
+        self.update_eyes()
+        self.body = []
+        self.grow_body(self)
+
 
 
 class SnakeBody(SnakePart):
