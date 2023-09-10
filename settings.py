@@ -19,6 +19,9 @@ class Settings:
         self.snake_body_margin = 5
         self.speedup_scale = 0.1
         self.growth_size = 25
+
+        self.eye_width = 3
+        self.eye_height = 3
         
         # Food settings
         self.foodsize = 20

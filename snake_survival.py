@@ -101,6 +101,7 @@ class SnakeSurvival:
         self.snake.draw_snake()
         for body_part in self.snake.body:
             body_part.draw_snake()
+        self.snake.draw_eyes()
         self.food.draw_food()
         self.sb.show_score()
 

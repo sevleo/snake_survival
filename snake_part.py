@@ -20,6 +20,7 @@ class Snake_part:
         pygame.draw.rect(self.screen, self.color, self.rect)
 
 
+
 class Snake_head(Snake_part):
     def __init__(self, ss_game):
         super().__init__(ss_game)
@@ -30,8 +31,19 @@ class Snake_head(Snake_part):
 
         self.speed_factor = 1 #Default value, changes when pressing Space
 
+        self.left_eye_rect = pygame.Rect(0, 0, self.settings.eye_width, self.settings.eye_height)
+        self.right_eye_rect = pygame.Rect(0, 0, self.settings.eye_width, self.settings.eye_height)
+
+        self.left_eye_rect.centerx = self.rect.centerx - 5
+        self.left_eye_rect.centery = self.rect.centery
+        self.right_eye_rect.centerx = self.rect.centerx + 5
+        self.right_eye_rect.centery = self.rect.centery
 
         self.body = []
+    
+    def draw_eyes(self):
+        pygame.draw.rect(self.screen, (255,0,0), self.left_eye_rect)
+        pygame.draw.rect(self.screen, (255,0,0), self.right_eye_rect)
 
     def update_head(self):
         if self.moving_up:
