@@ -66,25 +66,25 @@ class SnakeSurvival:
     def _check_keydown_events(self, event):
         if event.key == pygame.K_q:
             sys.exit()
-        elif event.key == pygame.K_DOWN and self.snake.moving_up == False:
+        elif event.key == pygame.K_DOWN and self.snake.moving_up == False and self.game_active == True:
             self.snake.moving_down = True
             self.snake.moving_right = False
             self.snake.moving_left = False
             self.snake.moving_up = False
             self.leading_rect_direction = "down"
-        elif event.key == pygame.K_UP and self.snake.moving_down == False:
+        elif event.key == pygame.K_UP and self.snake.moving_down == False and self.game_active == True:
             self.snake.moving_down = False
             self.snake.moving_right = False
             self.snake.moving_left = False
             self.snake.moving_up = True
             self.leading_rect_direction = "up"
-        elif event.key == pygame.K_RIGHT and self.snake.moving_left == False:
+        elif event.key == pygame.K_RIGHT and self.snake.moving_left == False and self.game_active == True:
             self.snake.moving_down = False
             self.snake.moving_right = True
             self.snake.moving_left = False
             self.snake.moving_up = False
             self.leading_rect_direction = "right"        
-        elif event.key == pygame.K_LEFT and self.snake.moving_right == False:
+        elif event.key == pygame.K_LEFT and self.snake.moving_right == False and self.game_active == True:
             self.snake.moving_down = False
             self.snake.moving_right = False
             self.snake.moving_left = True
