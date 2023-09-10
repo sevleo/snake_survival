@@ -35,7 +35,6 @@ class SnakeSurvival:
             self._check_food_collision()
             self._update_screen()
             self.clock.tick(self.settings.tick_value)
-            
 
 
     def _check_events(self):
@@ -54,22 +53,22 @@ class SnakeSurvival:
     def _check_keydown_events(self, event):
         if event.key == pygame.K_q:
             sys.exit()
-        elif event.key == pygame.K_DOWN:
+        elif event.key == pygame.K_DOWN and self.snake.moving_up == False:
             self.snake.moving_down = True
             self.snake.moving_right = False
             self.snake.moving_left = False
             self.snake.moving_up = False
-        elif event.key == pygame.K_UP:
+        elif event.key == pygame.K_UP and self.snake.moving_down == False:
             self.snake.moving_down = False
             self.snake.moving_right = False
             self.snake.moving_left = False
             self.snake.moving_up = True
-        elif event.key == pygame.K_RIGHT:
+        elif event.key == pygame.K_RIGHT and self.snake.moving_left == False:
             self.snake.moving_down = False
             self.snake.moving_right = True
             self.snake.moving_left = False
             self.snake.moving_up = False            
-        elif event.key == pygame.K_LEFT:
+        elif event.key == pygame.K_LEFT and self.snake.moving_right == False:
             self.snake.moving_down = False
             self.snake.moving_right = False
             self.snake.moving_left = True
