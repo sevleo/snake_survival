@@ -1,7 +1,7 @@
 import sys
 import pygame
 from settings import Settings
-from snake_part import Snake_head
+from snake_part import SnakeHead
 from food import Food
 from scoreboard import Scoreboard
 
@@ -21,7 +21,7 @@ class SnakeSurvival:
         self.screen_rect = self.screen.get_rect()
         
         self.sb = Scoreboard(self)
-        self.snake = Snake_head(self)
+        self.snake = SnakeHead(self)
         self.snake.grow_body(self)
         self.food = Food(self)
 
@@ -143,10 +143,7 @@ class SnakeSurvival:
             if self.leading_rect_direction == "left":
                 if (body_part.rect.right > self.snake.rect.right > body_part.rect.left) and (body_part.rect.centery == self.snake.rect.centery):
                     self.game_active = False               
-
    
- 
-    
     
 if __name__ == '__main__':
     # Make a game instance, and ru nthe game.

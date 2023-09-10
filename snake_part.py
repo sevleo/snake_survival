@@ -1,7 +1,7 @@
 import pygame
 from time import sleep
 
-class Snake_part:
+class SnakePart:
     """A base class for snake parts."""
     def __init__(self, ss_game):
         self.screen = ss_game.screen
@@ -21,7 +21,7 @@ class Snake_part:
 
 
 
-class Snake_head(Snake_part):
+class SnakeHead(SnakePart):
     def __init__(self, ss_game):
         super().__init__(ss_game)
         self.moving_up = False
@@ -99,10 +99,10 @@ class Snake_head(Snake_part):
         while i < self.settings.growth_size:
             # Create the first body part
             if not self.body:
-                new_body_part = Snake_body(ss_game, self)
+                new_body_part = SnakeBody(ss_game, self)
             # Create subsequent body parts
             else: 
-                new_body_part = Snake_body(ss_game, self.body[-1])
+                new_body_part = SnakeBody(ss_game, self.body[-1])
 
             self.body.append(new_body_part)
             i+=1
@@ -117,7 +117,7 @@ class Snake_head(Snake_part):
                 body_part.update_position(self.body[index-1].previous_position)
 
 
-class Snake_body(Snake_part):
+class SnakeBody(SnakePart):
     def __init__(self, ss_game, preceding_part):
         super().__init__(ss_game)
 
