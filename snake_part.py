@@ -156,15 +156,19 @@ class EnemySnake(SnakeHead):
         self.color = self.settings.enemy_snake_color
 
         self.tick_counter = 0
-        self.direction_change_interval = 100
-        self.x_direction = 1
-        self.y_direction = 1
-        self.direction = "right"
+        self.direction_change_interval = self.settings.enemy_snake_direction_change_interval
+        # self.direction = "right"
+        self.direction = choice(["right", "left", "top", "bottom"])
 
     def define_rect(self):
         self.rect = pygame.Rect(0, 0, self.settings.bodysize, self.settings.bodysize)
-        self.rect.y = self.screen_rect.y + 100
-        self.rect.x = self.screen_rect.x + 100
+        if choice([True, False]):
+            self.rect.y = randint(0, self.settings.screen_height)
+            self.rect.x = choice([self.screen_rect.left, self.screen_rect.right])
+        else:
+            self.rect.y = choice([self.screen_rect.top, self.screen_rect.bottom])
+            self.rect.x = randint(0, self.settings.screen_width)
+
         self.y = float(self.rect.y)
         self.x = float(self.rect.x)
 

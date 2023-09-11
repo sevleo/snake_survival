@@ -13,31 +13,24 @@ class SnakeSurvival:
     def __init__(self):
         """Initialize the game, and create game resources."""
         pygame.init()
-
         self.game_active = False
-
         self.clock = pygame.time.Clock()
         self.settings = Settings()
         self.screen = pygame.display.set_mode((self.settings.screen_width,self.settings.screen_height))
         pygame.display.set_caption("Snake Survival")
         self.screen_rect = self.screen.get_rect()
-        
         self.sb = Scoreboard(self)
         self.snake = SnakeHead(self)
-
         self.enemy_snakes = []
+        self.food = Food(self)
+        self.leading_rect_direction = ""
+        self.play_button = Button(self,  "Play")
 
+    
+    def create_enemy_snakes(self):
         for _ in range(self.settings.enemy_snake_count_default):
             enemy_snake = EnemySnake(self)
             self.enemy_snakes.append(enemy_snake)
-
-        self.food = Food(self)
-
-        self.leading_rect_direction = ""
-
-        self.play_button = Button(self,  "Play")
-
-        
         
 
     def run_game(self):
@@ -62,6 +55,8 @@ class SnakeSurvival:
         self.game_active = True
         self.sb.prep_images()
         self.sb.show_score()
+        self.create_enemy_snakes()
+
 
     def _check_events(self):
         """Respond to keypresses and mouse events."""
@@ -104,14 +99,12 @@ class SnakeSurvival:
             self.snake.moving_left = True
             self.snake.moving_up = False
             self.leading_rect_direction = "left"
-
         elif event.key == pygame.K_p:
             self._start_game()
 
         # Temporary buttons to simplify testing
         elif event.key == pygame.K_SPACE:
             self.settings.tick_value = int(self.settings.tick_value * self.settings.space_speed_scale)
-            # self.settings.enemy_snake_speed = self.settings.enemy_snake_speed / self.settings.space_speed_scale
         elif event.key == pygame.K_i:
             print(f"{self.snake.body}")
 
@@ -123,7 +116,7 @@ class SnakeSurvival:
             pass
         elif event.key == pygame.K_SPACE:
             self.settings.tick_value = self.settings.tick_value_default
-            # self.settings.enemy_snake_speed = self.settings.enemy_snake_speed * self.settings.space_speed_scale
+
 
     def _check_play_button(self, mouse_pos):
         """Start a new game when the player clicks Play."""
@@ -136,18 +129,20 @@ class SnakeSurvival:
         """Update images on the screen, and flip to the new screen."""
         self.screen.fill(self.settings.bg_color)
         self.sb.show_score()
-        self.snake.draw_snake()
+        
+        if self.game_active:
+            self.snake.draw_snake()
 
-        for body_part in self.snake.body:
-            body_part.draw_snake()
-
-        for snake in self.enemy_snakes:
-            snake.draw_snake()
-            for body_part in snake.body:
+            for body_part in self.snake.body:
                 body_part.draw_snake()
 
-        self.snake.draw_eyes()
-        self.food.draw_food()
+            for snake in self.enemy_snakes:
+                snake.draw_snake()
+                for body_part in snake.body:
+                    body_part.draw_snake()
+
+            self.snake.draw_eyes()
+            self.food.draw_food()
 
          # Draw the play button if the game is inactive.
         if not self.game_active:
@@ -171,10 +166,10 @@ class SnakeSurvival:
     def _check_body_collision(self):
         for body_part in self.snake.body[25:]:
             self._check_collision_helper(body_part)
-
         for snake in self.enemy_snakes:
             for body_part in snake.body:
                 self._check_collision_helper(body_part)
+
 
     def _check_collision_helper(self, body_part):
         if self.leading_rect_direction == "up":
@@ -201,6 +196,7 @@ class SnakeSurvival:
         self.snake.moving_up = False
         self.settings.snake_speed = 1
         self.settings.snake_size = 1
+        self.enemy_snakes.clear()
 
 
 if __name__ == '__main__':

@@ -33,9 +33,10 @@ class Settings:
         self.enemy_snake_speed = 1
         self.enemy_snake_count_default = 10
         self.enemy_snake_color = (94, 0, 0)
+        self.enemy_snake_direction_change_interval = 100
 
         # Game settings
-        self.space_speed_scale = 1.5
+        self.space_speed_scale = 3
 
 
 
