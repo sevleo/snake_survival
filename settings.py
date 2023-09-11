@@ -31,6 +31,7 @@ class Settings:
 
         # Enemy settings
         self.enemy_snake_speed = 1
+        self.enemy_snake_count_default = 2
 
         # Game settings
         self.space_speed_scale = 1.5
@@ -44,5 +45,10 @@ class Settings:
 
         # Scoreboard
         self.snake_size = 1
+
+        # Enemy snakes
+        self.enemy_snake_count = 3
+
+        
 
     

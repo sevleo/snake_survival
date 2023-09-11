@@ -24,14 +24,20 @@ class SnakeSurvival:
         
         self.sb = Scoreboard(self)
         self.snake = SnakeHead(self)
-        self.enemy_snake = EnemySnake(self)
-        self.enemy_snake2 = EnemySnake(self)
-        self.enemy_snake3 = EnemySnake(self)
+
+        self.enemy_snakes = []
+
+        for _ in range(self.settings.enemy_snake_count_default):
+            enemy_snake = EnemySnake(self)
+            self.enemy_snakes.append(enemy_snake)
+
         self.food = Food(self)
 
         self.leading_rect_direction = ""
 
         self.play_button = Button(self,  "Play")
+
+        
         
 
     def run_game(self):
@@ -41,10 +47,11 @@ class SnakeSurvival:
             if self.game_active:
                 self.snake.update_head()
                 self.snake.update_body()
-                self.enemy_snake.update_head()
-                self.enemy_snake2.update_head()
-                self.enemy_snake3.update_head()
-                # self.enemy_snake.update_body()
+
+                for snake in self.enemy_snakes:
+                    snake.update_head()
+                    snake.update_body()
+
                 self._check_food_collision()
                 self._check_body_collision()
             self._update_screen()
@@ -104,7 +111,7 @@ class SnakeSurvival:
         # Temporary buttons to simplify testing
         elif event.key == pygame.K_SPACE:
             self.settings.tick_value = int(self.settings.tick_value * self.settings.space_speed_scale)
-            self.settings.enemy_snake_speed = self.settings.enemy_snake_speed / self.settings.space_speed_scale
+            # self.settings.enemy_snake_speed = self.settings.enemy_snake_speed / self.settings.space_speed_scale
         elif event.key == pygame.K_i:
             print(f"{self.snake.body}")
 
@@ -116,7 +123,7 @@ class SnakeSurvival:
             pass
         elif event.key == pygame.K_SPACE:
             self.settings.tick_value = self.settings.tick_value_default
-            self.settings.enemy_snake_speed = self.settings.enemy_snake_speed * self.settings.space_speed_scale
+            # self.settings.enemy_snake_speed = self.settings.enemy_snake_speed * self.settings.space_speed_scale
 
     def _check_play_button(self, mouse_pos):
         """Start a new game when the player clicks Play."""
@@ -130,11 +137,18 @@ class SnakeSurvival:
         self.screen.fill(self.settings.bg_color)
         self.sb.show_score()
         self.snake.draw_snake()
-        self.enemy_snake.draw_snake()
-        self.enemy_snake2.draw_snake()
-        self.enemy_snake3.draw_snake()
+
         for body_part in self.snake.body:
             body_part.draw_snake()
+
+        for snake in self.enemy_snakes:
+            snake.draw_snake()
+            for body_part in snake.body:
+                body_part.draw_snake()
+
+
+
+
         self.snake.draw_eyes()
         self.food.draw_food()
 

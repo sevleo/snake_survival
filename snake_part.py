@@ -33,8 +33,6 @@ class SnakeHead(SnakePart):
         self.moving_right = False
         self.moving_left = False
 
-        self.speed_factor = 1 #Default value, changes when pressing Space
-
         self.left_eye_rect = pygame.Rect(0, 0, self.settings.eye_width, self.settings.eye_height)
         self.right_eye_rect = pygame.Rect(0, 0, self.settings.eye_width, self.settings.eye_height)
 
@@ -70,25 +68,25 @@ class SnakeHead(SnakePart):
 
     def update_head(self):
         if self.moving_up:
-            self.y -= self.settings.snake_speed * self.speed_factor
+            self.y -= self.settings.snake_speed
             if self.rect.top <= self.screen_rect.top:
                 self.y = self.screen_rect.bottom - self.settings.headsize
             self.update_eyes("up")
 
         elif self.moving_down:
-            self.y += self.settings.snake_speed * self.speed_factor
+            self.y += self.settings.snake_speed
             if self.rect.top+self.settings.headsize >= self.screen_rect.bottom:
                 self.y = self.screen_rect.top
             self.update_eyes("down")
 
         elif self.moving_right:
-            self.x += self.settings.snake_speed * self.speed_factor
+            self.x += self.settings.snake_speed
             if self.rect.left+self.settings.headsize >= self.screen_rect.right:
                 self.x = self.screen_rect.left
             self.update_eyes("right")
 
         elif self.moving_left:
-            self.x -= self.settings.snake_speed * self.speed_factor
+            self.x -= self.settings.snake_speed
             if self.rect.left <= self.screen_rect.left:
                 self.x = self.screen_rect.right - self.settings.headsize
             self.update_eyes("left")
@@ -196,7 +194,7 @@ class EnemySnake(SnakeHead):
             if self.rect.top <= self.screen_rect.top:
                 self.y = self.screen_rect.bottom - self.settings.headsize
 
-
+        self.previous_position = self.rect.copy()
         self.rect.y = self.y
         self.rect.x = self.x
         self.tick_counter += 1
