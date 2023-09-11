@@ -6,6 +6,7 @@ from food import Food
 from scoreboard import Scoreboard
 from button import Button
 from time import sleep
+from random import randint
 
 class SnakeSurvival:
     """Overall class to manage game assets and behavior."""
@@ -27,10 +28,11 @@ class SnakeSurvival:
         self.play_button = Button(self,  "Play")
 
     
-    def create_enemy_snakes(self):
-        for _ in range(self.settings.enemy_snake_count_default):
+    def create_enemy_snakes(self, numOfSnakes):
+        for _ in range(numOfSnakes):
             enemy_snake = EnemySnake(self)
             self.enemy_snakes.append(enemy_snake)
+        self.settings.enemy_snake_count += numOfSnakes
         
 
     def run_game(self):
@@ -53,9 +55,9 @@ class SnakeSurvival:
 
     def _start_game(self):
         self.game_active = True
+        self.create_enemy_snakes(self.settings.enemy_snake_count_default)
         self.sb.prep_images()
         self.sb.show_score()
-        self.create_enemy_snakes()
 
 
     def _check_events(self):
@@ -144,7 +146,7 @@ class SnakeSurvival:
             self.snake.draw_eyes()
             self.food.draw_food()
 
-         # Draw the play button if the game is inactive.
+        # Draw the play button if the game is inactive.
         if not self.game_active:
             self.play_button.draw_button()
 
@@ -158,14 +160,19 @@ class SnakeSurvival:
             self.snake.grow_body(self)
             self.settings.snake_speed = self.settings.snake_speed + self.settings.speedup_scale
 
+            self.create_enemy_snakes(randint(0,5))
+
+            self.settings.enemy_snake_speed += 0.025
+            
             # Update scoreboard
             self.settings.snake_size += 1
             self.sb.prep_images()
 
 
+
     def _check_body_collision(self):
-        for body_part in self.snake.body[25:]:
-            self._check_collision_helper(body_part)
+        # for body_part in self.snake.body[25:]:
+        #     self._check_collision_helper(body_part)
         enemies_to_remove = []
         for enemy_snake in self.enemy_snakes:
             for enemy_snake_body_part in enemy_snake.body:
@@ -177,6 +184,10 @@ class SnakeSurvival:
         for enemy_snake in enemies_to_remove:
             self.enemy_snakes.remove(enemy_snake)
             del enemy_snake
+            if self.settings.snake_speed > 1:
+                self.settings.snake_speed = self.settings.snake_speed - self.settings.speedup_scale/4
+            self.settings.enemy_snake_count -= 1
+            self.sb.prep_images()
 
 
     def _check_collision_helper(self, body_part):
@@ -205,6 +216,7 @@ class SnakeSurvival:
         self.settings.snake_speed = 1
         self.settings.snake_size = 1
         self.enemy_snakes.clear()
+        self.settings.enemy_snake_count = 0
 
 
 if __name__ == '__main__':

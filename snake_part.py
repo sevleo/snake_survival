@@ -1,6 +1,6 @@
 import pygame
 from time import sleep
-from random import choice, randint
+from random import choice, randint, uniform
 
 class SnakePart:
     """A base class for snake parts."""
@@ -133,7 +133,10 @@ class SnakeHead(SnakePart):
 
 
 class SnakeBody(SnakePart):
+    # total_instances = 0
     def __init__(self, ss_game, preceding_part, color=None):
+        # SnakeBody.total_instances += 1
+        # print(f"SnakeParts: {SnakeBody.total_instances}")
         super().__init__(ss_game)
         if color:
             self.color = color
@@ -154,9 +157,10 @@ class EnemySnake(SnakeHead):
     def __init__(self, ss_game):
         super().__init__(ss_game)
         self.color = self.settings.enemy_snake_color
+        self.speed_factor = uniform(0.5, 1.5)
 
         self.tick_counter = 0
-        self.direction_change_interval = self.settings.enemy_snake_direction_change_interval
+        self.direction_change_interval = self.settings.enemy_snake_direction_change_interval + randint(0, 500)
         # self.direction = "right"
         self.direction = choice(["right", "left", "top", "bottom"])
 
@@ -185,19 +189,19 @@ class EnemySnake(SnakeHead):
             self.tick_counter = 0
 
         if self.direction == "right":
-            self.x = self.x + self.settings.enemy_snake_speed
+            self.x = self.x + self.settings.enemy_snake_speed * self.speed_factor
             if self.rect.left+self.settings.headsize >= self.screen_rect.right:
                 self.x = self.screen_rect.left
         elif self.direction == "left":
-            self.x = self.x - self.settings.enemy_snake_speed
+            self.x = self.x - self.settings.enemy_snake_speed * self.speed_factor
             if self.rect.left <= self.screen_rect.left:
                 self.x = self.screen_rect.right - self.settings.headsize
         elif self.direction == "bottom":
-            self.y = self.y + self.settings.enemy_snake_speed
+            self.y = self.y + self.settings.enemy_snake_speed * self.speed_factor
             if self.rect.top+self.settings.headsize >= self.screen_rect.bottom:
                 self.y = self.screen_rect.top
         elif self.direction == "top":
-            self.y = self.y - self.settings.enemy_snake_speed
+            self.y = self.y - self.settings.enemy_snake_speed * self.speed_factor
             if self.rect.top <= self.screen_rect.top:
                 self.y = self.screen_rect.bottom - self.settings.headsize
 

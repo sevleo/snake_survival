@@ -49,7 +49,7 @@ class Settings:
         self.snake_size = 1
 
         # Enemy snakes
-        self.enemy_snake_count = 3
+        self.enemy_snake_count = 0
 
         
 
