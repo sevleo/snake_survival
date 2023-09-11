@@ -1,5 +1,6 @@
 import pygame
 from time import sleep
+from random import choice
 
 class SnakePart:
     """A base class for snake parts."""
@@ -9,16 +10,19 @@ class SnakePart:
         self.settings = ss_game.settings
         self.color = self.settings.snake_color
 
-        self.rect = pygame.Rect(0, 0, self.settings.bodysize, self.settings.bodysize)
-        self.rect.center = self.screen_rect.center
-        self.y = float(self.rect.y)
-        self.x = float(self.rect.x)
+        self.define_rect()
+
         self.previous_position = ''
 
     def draw_snake(self):
         """Draw the snake to the screen."""
         pygame.draw.rect(self.screen, self.color, self.rect)
 
+    def define_rect(self):
+        self.rect = pygame.Rect(0, 0, self.settings.bodysize, self.settings.bodysize)
+        self.rect.center = self.screen_rect.center
+        self.y = float(self.rect.y)
+        self.x = float(self.rect.x)
 
 
 class SnakeHead(SnakePart):
@@ -145,3 +149,54 @@ class SnakeBody(SnakePart):
 
         self.rect.y = self.y
         self.rect.x = self.x
+
+
+class EnemySnake(SnakeHead):
+    def __init__(self, ss_game):
+        super().__init__(ss_game)
+        self.tick_counter = 0
+        self.direction_change_interval = 100
+        self.x_direction = 1
+        self.y_direction = 1
+        self.direction = "right"
+
+    def define_rect(self):
+        self.rect = pygame.Rect(0, 0, self.settings.bodysize, self.settings.bodysize)
+        self.rect.y = self.screen_rect.y + 100
+        self.rect.x = self.screen_rect.x + 100
+        self.y = float(self.rect.y)
+        self.x = float(self.rect.x)
+
+    def update_head(self):
+        if self.tick_counter == self.direction_change_interval:
+            if self.direction == "right":
+                self.direction = choice(['right', 'top', 'bottom'])
+            elif self.direction == "left":
+                self.direction = choice(['left', 'top', 'bottom'])
+            elif self.direction == "top":
+                self.direction = choice(['right', 'left', 'top'])
+            elif self.direction == "bottom":
+                self.direction = choice(['right', 'bottom', 'left'])
+            self.tick_counter = 0
+
+        if self.direction == "right":
+            self.x = self.x + self.settings.enemy_snake_speed
+            if self.rect.left+self.settings.headsize >= self.screen_rect.right:
+                self.x = self.screen_rect.left
+        elif self.direction == "left":
+            self.x = self.x - self.settings.enemy_snake_speed
+            if self.rect.left <= self.screen_rect.left:
+                self.x = self.screen_rect.right - self.settings.headsize
+        elif self.direction == "bottom":
+            self.y = self.y + self.settings.enemy_snake_speed
+            if self.rect.top+self.settings.headsize >= self.screen_rect.bottom:
+                self.y = self.screen_rect.top
+        elif self.direction == "top":
+            self.y = self.y - self.settings.enemy_snake_speed
+            if self.rect.top <= self.screen_rect.top:
+                self.y = self.screen_rect.bottom - self.settings.headsize
+
+
+        self.rect.y = self.y
+        self.rect.x = self.x
+        self.tick_counter += 1

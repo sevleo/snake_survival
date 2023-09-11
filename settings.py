@@ -29,8 +29,11 @@ class Settings:
 
         self.initialize_dynamic_settings()
 
+        # Enemy settings
+        self.enemy_snake_speed = 1
+
         # Game settings
-        self.space_speed_scale = 1.2
+        self.space_speed_scale = 1.5
 
 
 
