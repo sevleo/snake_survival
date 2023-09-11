@@ -166,9 +166,17 @@ class SnakeSurvival:
     def _check_body_collision(self):
         for body_part in self.snake.body[25:]:
             self._check_collision_helper(body_part)
-        for snake in self.enemy_snakes:
-            for body_part in snake.body:
-                self._check_collision_helper(body_part)
+        enemies_to_remove = []
+        for enemy_snake in self.enemy_snakes:
+            for enemy_snake_body_part in enemy_snake.body:
+                self._check_collision_helper(enemy_snake_body_part)
+            for body_part in self.snake.body:
+                if enemy_snake.rect.colliderect(body_part):
+                    enemies_to_remove.append(enemy_snake)
+                    break
+        for enemy_snake in enemies_to_remove:
+            self.enemy_snakes.remove(enemy_snake)
+            del enemy_snake
 
 
     def _check_collision_helper(self, body_part):
