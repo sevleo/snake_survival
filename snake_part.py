@@ -1,6 +1,6 @@
 import pygame
 from time import sleep
-from random import choice
+from random import choice, randint
 
 class SnakePart:
     """A base class for snake parts."""
@@ -133,9 +133,10 @@ class SnakeHead(SnakePart):
 
 
 class SnakeBody(SnakePart):
-    def __init__(self, ss_game, preceding_part):
+    def __init__(self, ss_game, preceding_part, color=None):
         super().__init__(ss_game)
-
+        if color:
+            self.color = color
         self.update_position(preceding_part)
 
     # Update the position of a bady part
@@ -152,6 +153,8 @@ class SnakeBody(SnakePart):
 class EnemySnake(SnakeHead):
     def __init__(self, ss_game):
         super().__init__(ss_game)
+        self.color = self.settings.enemy_snake_color
+
         self.tick_counter = 0
         self.direction_change_interval = 100
         self.x_direction = 1
@@ -198,3 +201,18 @@ class EnemySnake(SnakeHead):
         self.rect.y = self.y
         self.rect.x = self.x
         self.tick_counter += 1
+
+    # Add a body part
+    def grow_body(self, ss_game):
+        size = randint(25, 250)
+        i = 0
+        while i < size:
+            # Create the first body part
+            if not self.body:
+                new_body_part = SnakeBody(ss_game, self, self.settings.enemy_snake_color)
+            # Create subsequent body parts
+            else: 
+                new_body_part = SnakeBody(ss_game, self.body[-1], self.settings.enemy_snake_color)
+
+            self.body.append(new_body_part)
+            i+=1

@@ -146,9 +146,6 @@ class SnakeSurvival:
             for body_part in snake.body:
                 body_part.draw_snake()
 
-
-
-
         self.snake.draw_eyes()
         self.food.draw_food()
 

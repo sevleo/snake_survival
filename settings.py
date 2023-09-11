@@ -31,7 +31,8 @@ class Settings:
 
         # Enemy settings
         self.enemy_snake_speed = 1
-        self.enemy_snake_count_default = 2
+        self.enemy_snake_count_default = 10
+        self.enemy_snake_color = (94, 0, 0)
 
         # Game settings
         self.space_speed_scale = 1.5
