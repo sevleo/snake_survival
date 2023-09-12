@@ -1,3 +1,6 @@
+from pathlib import Path
+import json
+
 class Settings:
     """A class to store all settings for the game."""
 
@@ -33,7 +36,7 @@ class Settings:
         self.enemy_snake_speed = 1
         self.enemy_snake_count_default = 10
         self.enemy_snake_color = (94, 0, 0)
-        self.enemy_snake_direction_change_interval = 100
+        self.enemy_snake_direction_change_interval = 50
 
         # Game settings
         self.space_speed_scale = 3
@@ -50,6 +53,19 @@ class Settings:
 
         # Enemy snakes
         self.enemy_snake_count = 0
+
+        # High score
+        self._extract_high_score()
+
+    
+    def _extract_high_score(self):
+        """Extract the high score from the file."""
+        path = Path('high_score.json')
+        contents = path.read_text()
+        high_score = json.loads(contents)
+        self.high_score = int(high_score)
+
+        
 
         
 

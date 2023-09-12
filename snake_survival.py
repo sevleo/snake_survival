@@ -7,6 +7,8 @@ from scoreboard import Scoreboard
 from button import Button
 from time import sleep
 from random import randint
+import json
+from pathlib import Path
 
 class SnakeSurvival:
     """Overall class to manage game assets and behavior."""
@@ -20,12 +22,13 @@ class SnakeSurvival:
         self.screen = pygame.display.set_mode((self.settings.screen_width,self.settings.screen_height))
         pygame.display.set_caption("Snake Survival")
         self.screen_rect = self.screen.get_rect()
+        self.play_button = Button(self,  "Play")
         self.sb = Scoreboard(self)
         self.snake = SnakeHead(self)
         self.enemy_snakes = []
         self.food = Food(self)
         self.leading_rect_direction = ""
-        self.play_button = Button(self,  "Play")
+        self.show_high_score = False
 
     
     def create_enemy_snakes(self, numOfSnakes):
@@ -55,15 +58,17 @@ class SnakeSurvival:
 
     def _start_game(self):
         self.game_active = True
+        self.show_high_score = False
         self.create_enemy_snakes(self.settings.enemy_snake_count_default)
         self.sb.prep_images()
-        self.sb.show_score()
+        self.sb.draw_score()
 
 
     def _check_events(self):
         """Respond to keypresses and mouse events."""
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                self._save_progress()
                 sys.exit()
             elif event.type == pygame.KEYDOWN:
                 self._check_keydown_events(event)
@@ -76,6 +81,7 @@ class SnakeSurvival:
 
     def _check_keydown_events(self, event):
         if event.key == pygame.K_q:
+            self._save_progress()
             sys.exit()
         elif event.key == pygame.K_DOWN and self.snake.moving_up == False and self.game_active == True:
             self.snake.moving_down = True
@@ -130,7 +136,7 @@ class SnakeSurvival:
     def _update_screen(self):
         """Update images on the screen, and flip to the new screen."""
         self.screen.fill(self.settings.bg_color)
-        self.sb.show_score()
+        self.sb.draw_score()
         
         if self.game_active:
             self.snake.draw_snake()
@@ -146,9 +152,14 @@ class SnakeSurvival:
             self.snake.draw_eyes()
             self.food.draw_food()
 
+
         # Draw the play button if the game is inactive.
         if not self.game_active:
             self.play_button.draw_button()
+            
+        if self.show_high_score:
+            self.sb.prep_high_score()
+            self.sb.draw_high_score()
 
         pygame.display.flip()
 
@@ -217,10 +228,20 @@ class SnakeSurvival:
         self.snake.moving_left = False
         self.snake.moving_up = False
         self.settings.snake_speed = 1
+        self._save_progress()
         self.settings.snake_size = 1
         self.enemy_snakes.clear()
         self.settings.enemy_snake_count = 0
+        self.show_high_score = True
 
+
+    def _save_progress(self):
+        if self.settings.snake_size > self.settings.high_score:
+            self.settings.high_score = self.settings.snake_size
+            path = Path('high_score.json')
+            contents = json.dumps(self.settings.high_score)
+            path.write_text(contents)
+            
 
 if __name__ == '__main__':
     # Make a game instance, and ru nthe game.
