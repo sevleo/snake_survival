@@ -1,5 +1,6 @@
 from pathlib import Path
 import json
+import os
 
 class Settings:
     """A class to store all settings for the game."""
@@ -57,11 +58,15 @@ class Settings:
     
     def _extract_high_score(self):
         """Extract the high score from the file."""
-        path = Path('high_score.json')
-        contents = path.read_text()
-        high_score = json.loads(contents)
-        self.high_score = int(high_score)
-
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        path = os.path.join(script_dir, 'high_score.json')
+        try:
+            with open(path, 'r') as file:
+                contents = file.read()
+                high_score = json.loads(contents)
+                self.high_score = int(high_score)
+        except FileNotFoundError:
+            self.high_score = 0
         
 
         

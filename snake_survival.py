@@ -244,7 +244,7 @@ class SnakeSurvival:
             path = os.path.join(script_dir, 'high_score.json')
             contents = json.dumps(self.settings.high_score)
             # path.write_text(contents)
-            with open(path, 'w')as file:
+            with open(path, 'w') as file:
                 file.write(contents)
 
 
