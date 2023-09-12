@@ -13,7 +13,6 @@ class Settings:
         self.tick_value = 200
         self.tick_value_default = 200
 
-
         # Snake settings
         self.snake_color = (50, 50, 50)
         
@@ -40,8 +39,6 @@ class Settings:
 
         # Game settings
         self.space_speed_scale = 3
-
-
 
 
     def initialize_dynamic_settings(self):

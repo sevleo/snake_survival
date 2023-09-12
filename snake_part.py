@@ -131,7 +131,6 @@ class SnakeHead(SnakePart):
         self.grow_body(self)
 
 
-
 class SnakeBody(SnakePart):
     # total_instances = 0
     def __init__(self, ss_game, preceding_part, color=None):
@@ -209,6 +208,7 @@ class EnemySnake(SnakeHead):
         self.rect.y = self.y
         self.rect.x = self.x
         self.tick_counter += 1
+
 
     # Add a body part
     def grow_body(self, ss_game):

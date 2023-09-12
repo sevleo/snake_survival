@@ -68,7 +68,6 @@ class SnakeSurvival:
         """Respond to keypresses and mouse events."""
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                self._save_progress()
                 sys.exit()
             elif event.type == pygame.KEYDOWN:
                 self._check_keydown_events(event)
@@ -81,7 +80,6 @@ class SnakeSurvival:
 
     def _check_keydown_events(self, event):
         if event.key == pygame.K_q:
-            self._save_progress()
             sys.exit()
         elif event.key == pygame.K_DOWN and self.snake.moving_up == False and self.game_active == True:
             self.snake.moving_down = True
@@ -236,12 +234,13 @@ class SnakeSurvival:
 
 
     def _save_progress(self):
+        # Save high score to the file.
         if self.settings.snake_size > self.settings.high_score:
             self.settings.high_score = self.settings.snake_size
             path = Path('high_score.json')
             contents = json.dumps(self.settings.high_score)
             path.write_text(contents)
-            
+
 
 if __name__ == '__main__':
     # Make a game instance, and ru nthe game.
