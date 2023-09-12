@@ -176,7 +176,9 @@ class SnakeSurvival:
         enemies_to_remove = []
         for enemy_snake in self.enemy_snakes:
             for enemy_snake_body_part in enemy_snake.body:
-                self._check_collision_helper(enemy_snake_body_part)
+                # self._check_collision_helper(enemy_snake_body_part)
+                if enemy_snake_body_part.rect.colliderect(self.snake.rect):
+                    self._reset_round()
             for body_part in self.snake.body:
                 if enemy_snake.rect.colliderect(body_part):
                     enemies_to_remove.append(enemy_snake)
@@ -190,19 +192,20 @@ class SnakeSurvival:
             self.sb.prep_images()
 
 
-    def _check_collision_helper(self, body_part):
-        if self.leading_rect_direction == "up":
-            if (body_part.rect.bottom > self.snake.rect.top > body_part.rect.top) and (body_part.rect.centerx == self.snake.rect.centerx):
-                self._reset_round()
-        if self.leading_rect_direction == "down":
-            if (body_part.rect.top < self.snake.rect.bottom < body_part.rect.bottom) and (body_part.rect.centerx == self.snake.rect.centerx):
-                self._reset_round()
-        if self.leading_rect_direction == "right":
-            if (body_part.rect.left < self.snake.rect.right < body_part.rect.right) and (body_part.rect.centery == self.snake.rect.centery):
-                self._reset_round()
-        if self.leading_rect_direction == "left":
-            if (body_part.rect.right > self.snake.rect.right > body_part.rect.left) and (body_part.rect.centery == self.snake.rect.centery):
-                self._reset_round()
+    """ This method is no longer used. It was used to gracefully detect collision of snake's head with its own body. """
+    # def _check_collision_helper(self, body_part):
+    #     if self.leading_rect_direction == "up":
+    #         if (body_part.rect.bottom > self.snake.rect.top > body_part.rect.top) and (body_part.rect.centerx == self.snake.rect.centerx):
+    #             self._reset_round()
+    #     if self.leading_rect_direction == "down":
+    #         if (body_part.rect.top < self.snake.rect.bottom < body_part.rect.bottom) and (body_part.rect.centerx == self.snake.rect.centerx):
+    #             self._reset_round()
+    #     if self.leading_rect_direction == "right":
+    #         if (body_part.rect.left < self.snake.rect.right < body_part.rect.right) and (body_part.rect.centery == self.snake.rect.centery):
+    #             self._reset_round()
+    #     if self.leading_rect_direction == "left":
+    #         if (body_part.rect.right > self.snake.rect.right > body_part.rect.left) and (body_part.rect.centery == self.snake.rect.centery):
+    #             self._reset_round()
                     
 
     def _reset_round(self):

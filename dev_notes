@@ -1,13 +1,4 @@
-Add enemy snake
-    Enemy snake appears at a random location at the start of the game (when you begin the movement)
-        - Later make snake come from beyond the border of the playfield
-
-    Enemy snake executes the random walk
-
-    Enemy snake does not require food to grow, it grows automatically. If it encounters food, it will make the player's snake shorter.
-    If enemy snake touches the player's snake, it will die, but it will make the player's snake shorter by the length of the deceased enemy snake.
-    If the player's snake touches an enemy snake, half the size of the player's snake will be transferred to the enemy snake.
-
+Refactor collision with other snakes
 
 Food
     Different kinds of food
