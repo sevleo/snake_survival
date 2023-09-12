@@ -2,3 +2,6 @@ __pycache__/
 .DS_Store
 .vscode
 launch.json
+build
+dist
+snake_survival.spec

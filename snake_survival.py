@@ -9,6 +9,7 @@ from time import sleep
 from random import randint
 import json
 from pathlib import Path
+import os
 
 class SnakeSurvival:
     """Overall class to manage game assets and behavior."""
@@ -237,9 +238,14 @@ class SnakeSurvival:
         # Save high score to the file.
         if self.settings.snake_size > self.settings.high_score:
             self.settings.high_score = self.settings.snake_size
-            path = Path('high_score.json')
+
+            script_dir = os.path.dirname(os.path.abspath(__file__))
+            # path = Path('high_score.json')
+            path = os.path.join(script_dir, 'high_score.json')
             contents = json.dumps(self.settings.high_score)
-            path.write_text(contents)
+            # path.write_text(contents)
+            with open(path, 'w')as file:
+                file.write(contents)
 
 
 if __name__ == '__main__':
