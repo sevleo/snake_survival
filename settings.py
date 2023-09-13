@@ -66,7 +66,7 @@ class Settings:
                 high_score = json.loads(contents)
                 self.high_score = int(high_score)
         except FileNotFoundError:
-            self.high_score = 0
+            pass
         
 
         

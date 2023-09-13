@@ -69,6 +69,7 @@ class SnakeSurvival:
         """Respond to keypresses and mouse events."""
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                self._save_progress()
                 sys.exit()
             elif event.type == pygame.KEYDOWN:
                 self._check_keydown_events(event)
@@ -81,6 +82,7 @@ class SnakeSurvival:
 
     def _check_keydown_events(self, event):
         if event.key == pygame.K_q:
+            self._save_progress()
             sys.exit()
         elif event.key == pygame.K_DOWN and self.snake.moving_up == False and self.game_active == True:
             self.snake.moving_down = True
